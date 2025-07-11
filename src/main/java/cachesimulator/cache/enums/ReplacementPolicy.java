@@ -1,6 +1,6 @@
 package cachesimulator.cache.enums;
 
-public enum SubstitutionPolicy {
+public enum ReplacementPolicy {
     LRU,
     FIFO,
     RANDOM
