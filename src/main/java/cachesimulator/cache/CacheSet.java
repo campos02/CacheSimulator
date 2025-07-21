@@ -1,6 +1,5 @@
 package cachesimulator.cache;
 
-import cachesimulator.StatRepository;
 import cachesimulator.cache.enums.HitOrMiss;
 import cachesimulator.cache.enums.ReplacementPolicy;
 import java.util.Random;
@@ -9,12 +8,10 @@ public class CacheSet {
     private final Way[] ways;
     private final ReplacementPolicy replacementPolicy;
     private final Random random = new Random();
-    private final StatRepository statRepository;
 
-    public CacheSet(int associativity, ReplacementPolicy policy, StatRepository repository) {
+    public CacheSet(int associativity, ReplacementPolicy policy) {
         ways = new Way[associativity];
         replacementPolicy = policy;
-        statRepository = repository;
 
         for (int i = 0; i < ways.length; i++) {
             ways[i] = new Way();
@@ -37,7 +34,6 @@ public class CacheSet {
         for (int i = 0; i < ways.length; i++) {
             switch (ways[i].checkAddress(tag)) {
                 case HitOrMiss.HIT -> {
-                    statRepository.increaseHits();
                     return HitOrMiss.HIT;
                 }
 
@@ -49,7 +45,6 @@ public class CacheSet {
                 }
 
                 case HitOrMiss.COMPULSORY_MISS -> {
-                    statRepository.increaseCompulsoryMisses();
                     ways[i].storeAddress(tag);
                     return HitOrMiss.COMPULSORY_MISS;
                 }

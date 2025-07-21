@@ -14,7 +14,7 @@ public class Cache {
         statRepository = repository;
 
         for (int i = 0; i < sets.length; i++) {
-            sets[i] = new CacheSet(associativity, policy, statRepository);
+            sets[i] = new CacheSet(associativity, policy);
         }
     }
 
@@ -22,11 +22,16 @@ public class Cache {
         statRepository.increaseAccesses();
         HitOrMiss result = sets[index].checkAndStoreAddress(tag);
 
-        if (result == HitOrMiss.MISS) {
-            if (!full)
-                statRepository.increaseConflictMisses();
-            else
-                statRepository.increaseCapacityMisses();
+        switch (result) {
+            case HitOrMiss.HIT -> statRepository.increaseHits();
+            case HitOrMiss.MISS -> {
+                if (!full)
+                    statRepository.increaseConflictMisses();
+                else
+                    statRepository.increaseCapacityMisses();
+            }
+
+            case HitOrMiss.COMPULSORY_MISS -> statRepository.increaseCompulsoryMisses();
         }
 
         if (result != HitOrMiss.HIT && !full) {
