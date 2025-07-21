@@ -12,6 +12,10 @@ public class Way {
         }
     }
 
+    public int getNumberOfSets() {
+        return cacheSets.length;
+    }
+
     public HitOrMissType checkAddress(int index, int tag) {
         if (cacheSets[index].getValidity() == 0)
             return HitOrMissType.COMPULSORY_MISS;

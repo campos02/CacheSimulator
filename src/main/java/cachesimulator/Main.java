@@ -29,8 +29,8 @@ public class Main {
         if (Math.floor(offset) != offset)
             throw new IllegalArgumentException("Block size must be a power of two");
 
-        double indices = (Math.log(Integer.parseInt(args[0]))/Math.log(2));
-        if (Math.floor(indices) != indices)
+        double indexes = (Math.log(Integer.parseInt(args[0]))/Math.log(2));
+        if (Math.floor(indexes) != indexes)
             throw new IllegalArgumentException("Number of sets must be a power of two");
 
         try (FileInputStream fileInputStream = new FileInputStream(args[5])) {
@@ -40,7 +40,7 @@ public class Main {
                 //noinspection InfiniteLoopStatement
                 while (true) {
                     int address = dataInputStream.readInt();
-                    int tag = address >> (int)(indices + offset);
+                    int tag = address >> (int)(indexes + offset);
                     int index = (address >> (int)offset) & (Integer.parseInt(args[0]) - 1);
                     cache.checkAndStoreAddress(index, tag);
                 }
