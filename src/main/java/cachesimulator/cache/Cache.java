@@ -17,6 +17,8 @@ public class Cache {
     }
 
     public void checkAndStoreAddress(int index, int tag) {
+        statRepository.increaseAccesses();
+
         for (int i = 0; i < ways.length; i++) {
             switch (ways[i].checkAddress(index, tag)) {
                 case HIT -> statRepository.increaseHits();
@@ -31,7 +33,7 @@ public class Cache {
                         ways[i].storeAddress(index, tag);
                     } else if (i == ways.length - 1) {
                         // TODO: Implement replacement policies
-                        statRepository.increaseConflictMisses();
+                        statRepository.increaseCapacityMisses();
                         ways[i].storeAddress(index, tag);
                     }
                 }

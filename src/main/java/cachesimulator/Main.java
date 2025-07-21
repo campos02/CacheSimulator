@@ -37,6 +37,7 @@ public class Main {
             DataInputStream dataInputStream = new DataInputStream(fileInputStream);
 
             try {
+                //noinspection InfiniteLoopStatement
                 while (true) {
                     int address = dataInputStream.readInt();
                     int tag = address >> (int)(indices + offset);
@@ -46,9 +47,27 @@ public class Main {
             } catch (EOFException _) {}
         }
 
-        System.out.println("Hits: " + statRepository.getHits());
-        System.out.println("Compulsory misses: " + statRepository.getCompulsoryMisses());
-        System.out.println("Conflict misses: " + statRepository.getConflictMisses());
-        System.out.println("Capacity misses: " + statRepository.getCapacityMisses());
+        switch (args[4]) {
+            case "0" -> {
+                System.out.println("Accesses: " + statRepository.getAccesses());
+                System.out.println("Hits: " + statRepository.getHits());
+                System.out.println("Hit rate: " + statRepository.hitRate());
+                System.out.println("Compulsory misses: " + statRepository.getCompulsoryMisses());
+                System.out.println("Conflict misses: " + statRepository.getConflictMisses());
+                System.out.println("Capacity misses: " + statRepository.getCapacityMisses());
+                System.out.println("Miss rate: " + statRepository.missRate());
+            }
+
+            case "1" -> System.out.printf("%d %.4f %.4f %.4f %.4f %.4f",
+                    statRepository.getAccesses(),
+                    statRepository.hitRate(),
+                    statRepository.missRate(),
+                    statRepository.compulsoryMissRate(),
+                    statRepository.capacityMissRate(),
+                    statRepository.conflictMissRate()
+            );
+
+            default -> throw new IllegalArgumentException("Output flag must be either 0 or 1");
+        }
     }
 }

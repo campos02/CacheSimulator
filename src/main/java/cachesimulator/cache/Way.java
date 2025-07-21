@@ -7,7 +7,6 @@ public class Way {
 
     public Way(int numberOfSets) {
         cacheSets = new CacheSet[numberOfSets];
-
         for (int i = 0; i < cacheSets.length; i++) {
             cacheSets[i] = new CacheSet();
         }
