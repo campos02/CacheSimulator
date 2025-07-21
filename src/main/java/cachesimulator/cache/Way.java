@@ -1,33 +1,26 @@
 package cachesimulator.cache;
 
-import cachesimulator.cache.enums.HitOrMissType;
+import cachesimulator.cache.enums.HitOrMiss;
 
 public class Way {
-    private final CacheSet[] cacheSets;
+    private final Block block = new Block();
 
-    public Way(int numberOfSets) {
-        cacheSets = new CacheSet[numberOfSets];
-        for (int i = 0; i < cacheSets.length; i++) {
-            cacheSets[i] = new CacheSet();
-        }
+    public boolean isFull() {
+        return block.getValidity() == 1;
     }
 
-    public int getNumberOfSets() {
-        return cacheSets.length;
-    }
+    public HitOrMiss checkAddress(int tag) {
+        if (block.getValidity() == 0)
+            return HitOrMiss.COMPULSORY_MISS;
 
-    public HitOrMissType checkAddress(int index, int tag) {
-        if (cacheSets[index].getValidity() == 0)
-            return HitOrMissType.COMPULSORY_MISS;
-
-        if (cacheSets[index].getTag() == tag)
-            return HitOrMissType.HIT;
+        if (block.getTag() == tag)
+            return HitOrMiss.HIT;
         else
-            return HitOrMissType.CONFLICT_MISS;
+            return HitOrMiss.MISS;
     }
 
-    public void storeAddress(int index, int tag) {
-        cacheSets[index].setValidityToOne();
-        cacheSets[index].setTag(tag);
+    public void storeAddress(int tag) {
+        block.setValidityToOne();
+        block.setTag(tag);
     }
 }

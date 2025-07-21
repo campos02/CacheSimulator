@@ -1,7 +1,7 @@
 package cachesimulator.cache.enums;
 
-public enum HitOrMissType {
+public enum HitOrMiss {
     HIT,
+    MISS,
     COMPULSORY_MISS,
-    CONFLICT_MISS,
 }
