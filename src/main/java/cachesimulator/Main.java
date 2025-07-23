@@ -2,6 +2,7 @@ package cachesimulator;
 
 import cachesimulator.cache.Cache;
 import cachesimulator.cache.enums.ReplacementPolicy;
+
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.FileInputStream;
@@ -27,11 +28,11 @@ public class Main {
 
         double offset = (Math.log(Integer.parseInt(args[1]))/Math.log(2));
         if (Math.floor(offset) != offset)
-            throw new IllegalArgumentException("Block size must be a power of two");
+            throw new IllegalArgumentException("Block size must be a power of 2");
 
         double indexes = (Math.log(Integer.parseInt(args[0]))/Math.log(2));
         if (Math.floor(indexes) != indexes)
-            throw new IllegalArgumentException("Number of sets must be a power of two");
+            throw new IllegalArgumentException("Number of sets must be a power of 2");
 
         try (FileInputStream fileInputStream = new FileInputStream(args[5])) {
             DataInputStream dataInputStream = new DataInputStream(fileInputStream);
