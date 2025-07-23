@@ -45,7 +45,7 @@ public class Main {
                     int index = (address >> (int)offset) & (Integer.parseInt(args[0]) - 1);
                     cache.checkAndStoreAddress(index, tag);
                 }
-            } catch (EOFException _) {}
+            } catch (EOFException ignored) {}
         }
 
         switch (args[4]) {
@@ -59,7 +59,7 @@ public class Main {
                 System.out.println("Miss rate: " + statRepository.missRate());
             }
 
-            case "1" -> System.out.printf("%d %.4f %.4f %.4f %.4f %.4f",
+            case "1" -> System.out.printf("%d %.4f %.4f %.4f %.4f %.4f%n",
                     statRepository.getAccesses(),
                     statRepository.hitRate(),
                     statRepository.missRate(),
